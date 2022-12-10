@@ -20,11 +20,9 @@ class AuthView extends GetView<AuthController> {
           child: Column(
             children: [
               const SizedBox(height: 100),
-              Container(
-                child: Image.asset(
-                  'assets/images/anya.png',
-                  width: 200,
-                ),
+              Image.asset(
+                'assets/images/anya.png',
+                width: 200,
               ),
               const SizedBox(height: 100),
               Container(
