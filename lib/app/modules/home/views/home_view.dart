@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:getwidget/getwidget.dart';
+import 'package:zanpakuto_ichigo/app/common/constant.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -13,12 +15,14 @@ class HomeView extends GetView<HomeController> {
         title: const Text('HomeView'),
         centerTitle: true,
       ),
-      body: const Center(
-        child: Text(
-          'HomeView is working',
-          style: TextStyle(fontSize: 20),
-        ),
-      ),
+      body: Center(
+          child: GFButton(
+        onPressed: () {
+          auth.signOut();
+        },
+        text: 'Logout',
+        color: Theme.of(context).primaryColor,
+      )),
     );
   }
 }

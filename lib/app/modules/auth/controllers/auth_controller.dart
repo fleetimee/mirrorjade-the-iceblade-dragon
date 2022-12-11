@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 import 'package:zanpakuto_ichigo/app/common/constant.dart';
+import 'package:zanpakuto_ichigo/app/data/provider/auth/auth.provider.dart';
+import 'package:zanpakuto_ichigo/app/routes/app_pages.dart';
 
 class AuthController extends GetxController {
   static AuthController instance = Get.find();
@@ -15,17 +17,23 @@ class AuthController extends GetxController {
     // ever(firebaseUser, handleAuth);
     // super.onReady();
 
+    //
+
+    // Check if platform is web
+
     firebaseUser = Rx<User?>(auth.currentUser);
 
     firebaseUser.bindStream(auth.authStateChanges());
     ever(firebaseUser, _setInitialScreen);
   }
 
-  _setInitialScreen(User? user) {
+  void _setInitialScreen(User? user) {
     if (user == null) {
-      Get.offAllNamed('/login');
+      debugPrint("User is currently signed out!");
+      Get.offAllNamed(Routes.AUTH);
     } else {
-      Get.offAllNamed('/home');
+      debugPrint("User is signed in!");
+      Get.offAllNamed(Routes.HOME);
     }
   }
 
@@ -33,4 +41,58 @@ class AuthController extends GetxController {
 
   var emailCtrl = TextEditingController();
   var passCtrl = TextEditingController();
+
+  final isLoginProcessing = false.obs;
+
+  void login() {
+    try {
+      isLoginProcessing.value = true;
+      AuthProvider().login(emailCtrl.text, passCtrl.text).then((resp) async {
+        // Get custom token from login response
+        final token = resp.accessToken;
+
+        // Initialize Firebase with custom token to get idToken
+        final idToken = await FirebaseAuth.instance
+            .signInWithCustomToken(token!)
+            .then((value) => value.user!.getIdToken());
+
+        // Temporary print idToken
+        debugPrint(idToken);
+
+        // Get idToken from Firebase
+        final idTokenFinal =
+            await FirebaseAuth.instance.currentUser!.getIdToken();
+
+        // Verify idToken with backend
+        AuthProvider().verifyIdToken(idTokenFinal).then((resp) {
+          if (resp.message == 'Token is valid') {
+            // Get.offAllNamed(Routes.HOME);
+
+            Get.snackbar(
+              'Success',
+              'Login successful',
+              backgroundColor: Colors.green,
+              colorText: Colors.white,
+            );
+          } else {
+            Get.snackbar(
+              'Error',
+              'Invalid access token',
+              backgroundColor: Colors.red,
+              colorText: Colors.white,
+            );
+          }
+        });
+        isLoginProcessing(false);
+      });
+    } catch (e) {
+      isLoginProcessing(false);
+      Get.snackbar(
+        'Error',
+        e.toString(),
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
+  }
 }

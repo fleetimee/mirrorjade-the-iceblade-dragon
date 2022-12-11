@@ -54,13 +54,26 @@ class AuthView extends GetView<AuthController> {
                 padding: const EdgeInsets.symmetric(horizontal: 50),
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: GFButton(
-                    onPressed: () {},
-                    text: 'Login',
-                    fullWidthButton: true,
-                    color: Theme.of(context).primaryColor,
-                    size: GFSize.LARGE,
-                    shape: GFButtonShape.pills,
+                  child: Obx(
+                    () => GFButton(
+                      onPressed: () {
+                        if (controller.formKey.currentState
+                                ?.saveAndValidate() ??
+                            false) {
+                          controller.login();
+                        } else {
+                          print(controller.formKey.currentState?.value);
+                          print('validation failed');
+                        }
+                      },
+                      text: controller.isLoginProcessing.value
+                          ? 'Loading...'
+                          : 'Login',
+                      fullWidthButton: true,
+                      color: Theme.of(context).primaryColor,
+                      size: GFSize.LARGE,
+                      shape: GFButtonShape.pills,
+                    ),
                   ),
                 ),
               ),
