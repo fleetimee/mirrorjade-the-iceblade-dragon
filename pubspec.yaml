@@ -7,7 +7,10 @@ environment:
 
 dependencies:
   cupertino_icons: ^1.0.2
+  easy_sidemenu: ^0.4.1
+  firebase_auth: ^4.2.0
   firebase_core: ^2.4.0
+  fl_chart: ^0.55.2
   flex_color_scheme: ^6.1.1
   flutter:
     sdk: flutter
@@ -20,6 +23,7 @@ dependencies:
   google_fonts: ^3.0.1
   http: ^0.13.5
   responsive_framework: ^0.2.0
+  shared_preferences: ^2.0.15
 
 dev_dependencies:
   flutter_lints: ^2.0.0

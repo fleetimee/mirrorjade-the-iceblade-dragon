@@ -1,4 +1,3 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -6,7 +5,8 @@ import 'package:form_builder_validators/localization/l10n.dart';
 
 import 'package:get/get.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import 'package:zanpakuto_ichigo/firebase_options.dart';
+import 'package:zanpakuto_ichigo/app/common/constant.dart';
+import 'package:zanpakuto_ichigo/app/modules/auth/controllers/auth_controller.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'app/routes/app_pages.dart';
@@ -15,9 +15,7 @@ void main() async {
   // Initialize widget
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  Get.testMode = true;
 
   runApp(
     GetMaterialApp(
@@ -35,12 +33,15 @@ void main() async {
           ],
           background: Container(color: const Color(0xFFF5F5F5))),
       title: "AKM Admin",
-      initialRoute: AppPages.INITIAL,
+      home: const Center(
+        child: CircularProgressIndicator(),
+      ),
       getPages: AppPages.routes,
       theme: FlexColorScheme.light(
         scheme: FlexScheme.deepBlue,
-        appBarStyle: FlexAppBarStyle.primary,
+        appBarStyle: FlexAppBarStyle.scaffoldBackground,
         fontFamily: GoogleFonts.openSans().fontFamily,
+        useMaterial3: true,
       ).toTheme,
       darkTheme: FlexColorScheme.dark(
         scheme: FlexScheme.deepBlue,
@@ -61,4 +62,8 @@ void main() async {
       locale: const Locale('en'),
     ),
   );
+
+  await firebaseInitialization.then((value) {
+    Get.put(AuthController());
+  });
 }
