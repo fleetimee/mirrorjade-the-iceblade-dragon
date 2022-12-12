@@ -39,8 +39,9 @@ void main() async {
       getPages: AppPages.routes,
       theme: FlexColorScheme.light(
         scheme: FlexScheme.deepBlue,
-        appBarStyle: FlexAppBarStyle.primary,
+        appBarStyle: FlexAppBarStyle.scaffoldBackground,
         fontFamily: GoogleFonts.openSans().fontFamily,
+        useMaterial3: true,
       ).toTheme,
       darkTheme: FlexColorScheme.dark(
         scheme: FlexScheme.deepBlue,

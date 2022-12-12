@@ -1,0 +1,192 @@
+[
+  {
+    "_id": "88488ef4-ac34-4f75-a2b7-60519b187bc4",
+    "colName": "Neo Claudius",
+    "created": "2022-12-02T12:49:21.417Z",
+    "sortNum": 30000,
+    "folders": [
+      {
+        "_id": "441a228d-423a-4749-be19-2b42bd098312",
+        "name": "Users",
+        "containerId": "",
+        "created": "2022-12-01T20:28:40.497Z",
+        "sortNum": 220000
+      },
+      {
+        "_id": "97c566c9-7112-4d56-989a-b7f6548835d0",
+        "name": "Debitur",
+        "containerId": "",
+        "created": "2022-12-02T12:49:21.425Z",
+        "sortNum": 10000
+      },
+      {
+        "_id": "b7ba4801-8373-45f6-8877-4bdf0c62bf2a",
+        "name": "Input Neraca",
+        "containerId": "946c94b5-ec68-43a4-a2e8-8fe9cf81105e",
+        "created": "2022-12-02T12:49:21.426Z",
+        "sortNum": 10000
+      },
+      {
+        "_id": "a86ffe02-e2b4-4bcb-ae69-baadfbcac2d1",
+        "name": "Agunan Tanah",
+        "containerId": "09d65151-cea9-4025-9265-c51b42bb4d73",
+        "created": "2022-12-02T12:49:21.428Z",
+        "sortNum": 10000
+      },
+      {
+        "_id": "09d65151-cea9-4025-9265-c51b42bb4d73",
+        "name": "Input Agunan",
+        "containerId": "bc3a3cb6-18b9-485c-9b61-18a055231b82",
+        "created": "2022-12-02T12:49:21.429Z",
+        "sortNum": 10000
+      },
+      {
+        "_id": "946c94b5-ec68-43a4-a2e8-8fe9cf81105e",
+        "name": "Keuangan",
+        "containerId": "",
+        "created": "2022-12-02T12:49:21.430Z",
+        "sortNum": 12500
+      },
+      {
+        "_id": "35ef6417-bfa5-4d26-9bf3-c4b2b488201c",
+        "name": "Rugi Laba",
+        "containerId": "946c94b5-ec68-43a4-a2e8-8fe9cf81105e",
+        "created": "2022-12-02T12:49:21.431Z",
+        "sortNum": 20000
+      },
+      {
+        "_id": "7587599c-f1e6-4a0b-9e7e-16b9466dfc92",
+        "name": "Input Keuangan",
+        "containerId": "946c94b5-ec68-43a4-a2e8-8fe9cf81105e",
+        "created": "2022-12-02T12:49:21.432Z",
+        "sortNum": 30000
+      },
+      {
+        "_id": "46ef0b41-c19c-489c-9ebc-36cedf397930",
+        "name": "Analisis Keungan",
+        "containerId": "946c94b5-ec68-43a4-a2e8-8fe9cf81105e",
+        "created": "2022-12-02T12:49:21.433Z",
+        "sortNum": 40000
+      },
+      {
+        "_id": "fa326149-d3f3-451f-9f17-2e31cbe1de6f",
+        "name": "Bisnis",
+        "containerId": "",
+        "created": "2022-12-02T12:49:21.434Z",
+        "sortNum": 50000
+      },
+      {
+        "_id": "9bb0632c-3786-418a-806b-69f3544ef8b4",
+        "name": "Karakter",
+        "containerId": "",
+        "created": "2022-12-02T12:49:21.435Z",
+        "sortNum": 60000
+      },
+      {
+        "_id": "f4642a57-8836-440f-bd87-ec5f81c2ff2a",
+        "name": "Agunan Tanah dan Bangunan",
+        "containerId": "09d65151-cea9-4025-9265-c51b42bb4d73",
+        "created": "2022-12-02T12:49:21.436Z",
+        "sortNum": 65000
+      },
+      {
+        "_id": "e705b696-1316-4e87-aed0-3f51af1c0a6e",
+        "name": "Jenis Usaha",
+        "containerId": "",
+        "created": "2022-12-02T12:49:21.437Z",
+        "sortNum": 70000
+      },
+      {
+        "_id": "bc3a3cb6-18b9-485c-9b61-18a055231b82",
+        "name": "Agunan",
+        "containerId": "",
+        "created": "2022-12-02T12:49:21.438Z",
+        "sortNum": 80000
+      },
+      {
+        "_id": "76cdf262-9b36-4481-9e70-b647f0085286",
+        "name": "Agunan Kendaraan",
+        "containerId": "09d65151-cea9-4025-9265-c51b42bb4d73",
+        "created": "2022-12-02T12:49:21.439Z",
+        "sortNum": 120000
+      },
+      {
+        "_id": "32651c89-8286-4364-aea3-b9f18dd57fb8",
+        "name": "Agunan Los Pasar",
+        "containerId": "09d65151-cea9-4025-9265-c51b42bb4d73",
+        "created": "2022-12-02T12:49:21.440Z",
+        "sortNum": 130000
+      },
+      {
+        "_id": "b4fe9ad1-5036-4d14-a5e2-cf400c9f0757",
+        "name": "Agunan Peralatan",
+        "containerId": "09d65151-cea9-4025-9265-c51b42bb4d73",
+        "created": "2022-12-02T12:49:21.441Z",
+        "sortNum": 140000
+      },
+      {
+        "_id": "4ff44b79-2da8-4556-a725-12020069b474",
+        "name": "Agunan Cash",
+        "containerId": "09d65151-cea9-4025-9265-c51b42bb4d73",
+        "created": "2022-12-02T12:49:21.442Z",
+        "sortNum": 150000
+      },
+      {
+        "_id": "dfe173ae-f656-4869-a013-a2f4c7b3458d",
+        "name": "Agunan Lainnya",
+        "containerId": "09d65151-cea9-4025-9265-c51b42bb4d73",
+        "created": "2022-12-02T12:49:21.443Z",
+        "sortNum": 160000
+      },
+      {
+        "_id": "dd6aa8ca-b689-442f-b8f6-625e03ea1eab",
+        "name": "Syarat Lainnya",
+        "containerId": "",
+        "created": "2022-12-02T12:49:21.444Z",
+        "sortNum": 170000
+      },
+      {
+        "_id": "1b4eb85d-8fb6-4d39-9604-34fb3fa178e2",
+        "name": "Analisa Agunan",
+        "containerId": "bc3a3cb6-18b9-485c-9b61-18a055231b82",
+        "created": "2022-12-02T12:49:21.445Z",
+        "sortNum": 180000
+      },
+      {
+        "_id": "1e0bd252-2cde-4dd2-ad5e-645de69b054f",
+        "name": "Ijin Legitimasi",
+        "containerId": "",
+        "created": "2022-12-02T12:49:21.446Z",
+        "sortNum": 190000
+      },
+      {
+        "_id": "733650c5-d62a-4d2f-be45-ead15f43e552",
+        "name": "Asuransi",
+        "containerId": "",
+        "created": "2022-12-02T12:49:21.447Z",
+        "sortNum": 200000
+      },
+      {
+        "_id": "cfa639f0-01ff-45a0-9c14-286b83e679b1",
+        "name": "Upload Image",
+        "containerId": "",
+        "created": "2022-12-02T12:49:21.448Z",
+        "sortNum": 210000
+      },
+      {
+        "_id": "4ce03fe6-0b2d-4f0f-93fd-88e9c4ae19df",
+        "name": "Auth",
+        "containerId": "",
+        "created": "2022-12-02T22:22:28.259Z",
+        "sortNum": 240000
+      },
+      {
+        "_id": "b0ceae81-e60d-4396-8e66-c7e0520b9d82",
+        "name": "Playground",
+        "containerId": "",
+        "created": "2022-12-02T22:25:55.843Z",
+        "sortNum": 250000
+      }
+    ]
+  }
+]
