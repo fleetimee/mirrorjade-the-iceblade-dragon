@@ -68,7 +68,13 @@ class HomeView extends GetView<HomeController> {
                 priority: 1,
                 title: 'Manage User (Local)',
                 onTap: () => page.jumpToPage(1),
-                icon: const Icon(Icons.person_outline_rounded),
+                icon: const Icon(Icons.person_pin_rounded),
+              ),
+              SideMenuItem(
+                priority: 2,
+                title: 'Manage User (Remote)',
+                onTap: () {},
+                icon: const Icon(Icons.cloud),
               ),
               SideMenuItem(
                 priority: 2,
@@ -150,7 +156,15 @@ class HomeView extends GetView<HomeController> {
                       Align(
                         alignment: Alignment.topRight,
                         child: GFButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            // Show dialog
+                            Get.dialog(
+                              const AlertDialog(
+                                title: Text('Add User'),
+                                content: Text('Add user dialog'),
+                              ),
+                            );
+                          },
                           text: 'Add User',
                           color: Theme.of(context).primaryColor,
                         ),
@@ -160,75 +174,91 @@ class HomeView extends GetView<HomeController> {
                       ),
                       GFStickyHeader(
                           stickyContent: Container(
-                            child: Container(
-                              alignment: AlignmentDirectional.center,
-                              height: 50,
-                              width: MediaQuery.of(context).size.width,
-                              color: Theme.of(context).primaryColor,
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 16.0),
-                              child: Row(
-                                children: const [
-                                  SizedBox(
-                                    width: 15,
-                                  ),
-                                  SizedBox(
-                                    width: 100,
-                                    child: Text(
-                                      'Avatar',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 15,
-                                  ),
-                                  SizedBox(
-                                    width: 200,
-                                    child: Text(
-                                      'Email',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                  ),
-                                  Text(
-                                    'Name',
+                            alignment: AlignmentDirectional.center,
+                            height: 50,
+                            width: MediaQuery.of(context).size.width,
+                            color: Theme.of(context).primaryColor,
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 16.0),
+                            child: Row(
+                              children: const [
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                SizedBox(
+                                  width: 100,
+                                  child: Text(
+                                    'Avatar',
                                     style: TextStyle(color: Colors.white),
                                   ),
-                                ],
-                              ),
+                                ),
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                SizedBox(
+                                  width: 200,
+                                  child: Text(
+                                    'Email',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                                Text(
+                                  'Name',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ],
                             ),
                           ),
                           content: const SizedBox.shrink()),
                       Expanded(
-                        child: ListView.builder(
-                          itemCount: 10,
-                          itemBuilder: (context, index) {
-                            return ListView.builder(
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: 10,
-                              itemBuilder: (context, index) {
-                                return GFListTile(
-                                  avatar: const GFAvatar(
-                                    backgroundImage:
-                                        AssetImage('assets/images/anya.png'),
+                        child: Obx(
+                          () {
+                            if (controller.listUsers.isEmpty) {
+                              return const Center(
+                                child: Text('No data'),
+                              );
+                            } else {
+                              if (controller.isUsersProcessing.value) {
+                                return Center(
+                                  child: CircularProgressIndicator(
+                                    color: Theme.of(context).primaryColor,
                                   ),
-                                  title: Row(
-                                    children: const [
-                                      SizedBox(
-                                        width: 250,
-                                        child:
-                                            Text('Novian Andika Novian Andika'),
-                                      ),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      Text('Name'),
-                                    ],
-                                  ),
-                                  icon: const Icon(Icons.person),
                                 );
-                              },
-                            );
+                              } else {
+                                return ListView.builder(
+                                  itemCount: controller.listUsers.length,
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemBuilder: (context, index) {
+                                    return GFListTile(
+                                      avatar: GFAvatar(
+                                        backgroundImage: NetworkImage(
+                                          controller.listUsers[index].photoUrl
+                                              .toString(),
+                                        ),
+                                      ),
+                                      title: Row(
+                                        children: [
+                                          SizedBox(
+                                            width: 250,
+                                            child: Text(controller
+                                                .listUsers[index].email
+                                                .toString()),
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text(controller
+                                              .listUsers[index].displayName
+                                              .toString()),
+                                        ],
+                                      ),
+                                      icon: const Icon(Icons.person),
+                                    );
+                                  },
+                                );
+                              }
+                            }
                           },
                         ),
                       ),

@@ -12,10 +12,10 @@ import 'package:zanpakuto_ichigo/app/data/model/user/user.model.dart';
 class UsersProvider {
   final httpClient = http.Client();
 
-  Future<List<Users>> fetchUsers(int page) async {
+  Future<List<Users>> fetchUsers() async {
     try {
       final response = await httpClient.get(
-        Uri.parse('${baseUrl}users?page=$page&limit=10'),
+        Uri.parse('${baseUrl}users'),
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
@@ -23,11 +23,10 @@ class UsersProvider {
               '*', // Required for CORS support to work
         },
       );
-      debugPrint(response.body);
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
         debugPrint(data.toString());
-        return usersFromJson(data['data']);
+        return (data as List).map((e) => Users.fromJson(e)).toList();
       } else {
         var data = jsonDecode(response.body);
         throw Exception(data['message']);
