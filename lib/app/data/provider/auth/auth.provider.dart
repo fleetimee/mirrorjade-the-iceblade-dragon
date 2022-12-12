@@ -45,12 +45,7 @@ class AuthProvider {
         //   'Content-Type': 'application/json',
         //   'Accept': 'application/json',
         // },
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'Access-Control-Allow-Origin':
-              '*', // Required for CORS support to work
-        },
+
         body: {
           'token': idToken,
         },
