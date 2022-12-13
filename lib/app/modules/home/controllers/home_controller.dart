@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/colors/gf_color.dart';
+import 'package:zanpakuto_ichigo/app/data/model/firebase-user/firebase-user.model.dart';
 import 'package:zanpakuto_ichigo/app/data/model/user/user.model.dart';
+import 'package:zanpakuto_ichigo/app/data/provider/user-remote/user-remote.provider.dart';
 import 'package:zanpakuto_ichigo/app/data/provider/user/user.provider.dart';
 
 class HomeController extends GetxController {
@@ -10,8 +12,10 @@ class HomeController extends GetxController {
   final formKey = GlobalKey<FormBuilderState>();
 
   // for fetching list of users
-  var listUsers = List<Users>.empty().obs;
+  var listUsers = List<Users>.empty(growable: true).obs;
   var isUsersProcessing = false.obs;
+  var listRemoteUsers = List<User>.empty(growable: true).obs;
+  var isRemoteUsersProcessing = false.obs;
 
   // for local form variable
   var email = TextEditingController();
@@ -23,6 +27,7 @@ class HomeController extends GetxController {
   void onInit() {
     super.onInit();
     getUsers();
+    getRemoteUsers();
   }
 
   void getUsers() {
@@ -135,6 +140,38 @@ class HomeController extends GetxController {
       });
     } catch (e) {
       isUsersProcessing(false);
+      Get.snackbar('Error', e.toString());
+    }
+  }
+
+  void getRemoteUsers() async {
+    try {
+      isRemoteUsersProcessing(true);
+      // UsersFirebaseProvider().fetchRemoteUsers().then((resp) {
+      //   isRemoteUsersProcessing(false);
+      //   listRemoteUsers.clear();
+      //   // listRemoteUsers.addAll(resp);
+      // }, onError: (e) {
+      //   isRemoteUsersProcessing(false);
+      //   Get.snackbar('Error', e.toString());
+      // });
+
+      UsersFirebaseProvider().fetchRemoteUsers().then((resp) {
+        isRemoteUsersProcessing(false);
+        final listResult = resp.data?.users;
+        listRemoteUsers.clear();
+        listRemoteUsers.addAll(listResult!);
+      }, onError: (error) {
+        isRemoteUsersProcessing(false);
+        Get.snackbar('Error', error.toString());
+      });
+
+      // final result = await UsersFirebaseProvider().fetchRemoteUsers();
+      // final listResult = result.data?.users;
+      // listRemoteUsers.clear();
+      // listRemoteUsers.addAll(listResult!);
+    } catch (e) {
+      isRemoteUsersProcessing(false);
       Get.snackbar('Error', e.toString());
     }
   }
