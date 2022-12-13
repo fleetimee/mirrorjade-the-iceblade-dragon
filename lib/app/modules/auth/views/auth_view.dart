@@ -62,8 +62,7 @@ class AuthView extends GetView<AuthController> {
                             false) {
                           controller.login();
                         } else {
-                          print(controller.formKey.currentState?.value);
-                          print('validation failed');
+                          debugPrint('Form is invalid');
                         }
                       },
                       text: controller.isLoginProcessing.value
