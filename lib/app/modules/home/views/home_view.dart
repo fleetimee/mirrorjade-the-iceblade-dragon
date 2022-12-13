@@ -2,6 +2,7 @@ import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:getwidget/getwidget.dart';
 import 'package:zanpakuto_ichigo/app/modules/home/views/components/dashboard.dart';
 import 'package:zanpakuto_ichigo/app/modules/home/views/components/manage_local.dart';
 
@@ -92,12 +93,61 @@ class HomeView extends GetView<HomeController> {
               children: [
                 const Dashboard(),
                 ManageLocalUsers(),
-                Center(
-                  child: Text(
-                    'Manage User (Remote)',
-                    style: Theme.of(context).textTheme.headline4,
+                Container(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    children: [
+                      GFStickyHeader(
+                        stickyContent: Container(
+                          alignment: AlignmentDirectional.center,
+                          height: 50,
+                          width: MediaQuery.of(context).size.width,
+                          color: Theme.of(context).primaryColor,
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                          child: Row(
+                            children: const [
+                              SizedBox(
+                                width: 15,
+                              ),
+                              SizedBox(
+                                width: 100,
+                                child: Text(
+                                  'Avatar',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 15,
+                              ),
+                              SizedBox(
+                                width: 180,
+                                child: Text(
+                                  'Email',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 100,
+                                child: Text(
+                                  'Name',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 30,
+                              ),
+                              Text(
+                                'Creation Date',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ],
+                          ),
+                        ),
+                        content: const SizedBox.shrink(),
+                      ),
+                    ],
                   ),
-                ),
+                )
               ],
             ),
           ),

@@ -42,52 +42,53 @@ class ManageLocalUsers extends StatelessWidget {
             height: 20,
           ),
           GFStickyHeader(
-              stickyContent: Container(
-                alignment: AlignmentDirectional.center,
-                height: 50,
-                width: MediaQuery.of(context).size.width,
-                color: Theme.of(context).primaryColor,
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Row(
-                  children: const [
-                    SizedBox(
-                      width: 15,
-                    ),
-                    SizedBox(
-                      width: 100,
-                      child: Text(
-                        'Avatar',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    SizedBox(
-                      width: 180,
-                      child: Text(
-                        'Email',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 100,
-                      child: Text(
-                        'Name',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 30,
-                    ),
-                    Text(
-                      'Creation Date',
+            stickyContent: Container(
+              alignment: AlignmentDirectional.center,
+              height: 50,
+              width: MediaQuery.of(context).size.width,
+              color: Theme.of(context).primaryColor,
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Row(
+                children: const [
+                  SizedBox(
+                    width: 15,
+                  ),
+                  SizedBox(
+                    width: 100,
+                    child: Text(
+                      'Avatar',
                       style: TextStyle(color: Colors.white),
                     ),
-                  ],
-                ),
+                  ),
+                  SizedBox(
+                    width: 15,
+                  ),
+                  SizedBox(
+                    width: 180,
+                    child: Text(
+                      'Email',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 100,
+                    child: Text(
+                      'Name',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 30,
+                  ),
+                  Text(
+                    'Creation Date',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ],
               ),
-              content: const SizedBox.shrink()),
+            ),
+            content: const SizedBox.shrink(),
+          ),
           Expanded(
             child: Obx(
               () {
