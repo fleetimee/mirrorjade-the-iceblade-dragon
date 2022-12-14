@@ -2,7 +2,7 @@
 //
 //     final firebaseUsers = firebaseUsersFromJson(jsonString);
 
-// ignore_for_file: prefer_null_aware_operators
+// ignore_for_file: prefer_null_aware_operators, prefer_if_null_operators, unnecessary_null_comparison
 
 import 'dart:convert';
 
@@ -60,6 +60,7 @@ class User {
     this.providerData,
     this.email,
     this.displayName,
+    this.customClaims,
     this.tokensValidAfterTime,
   });
 
@@ -68,6 +69,7 @@ class User {
   bool? disabled;
   Metadata? metadata;
   List<ProviderDatum>? providerData;
+  CustomClaims? customClaims;
   String? email;
   String? displayName;
   String? tokensValidAfterTime;
@@ -83,6 +85,9 @@ class User {
             ? null
             : List<ProviderDatum>.from(
                 json["providerData"].map((x) => ProviderDatum.fromJson(x))),
+        customClaims: json["customClaims"] == null
+            ? null
+            : CustomClaims.fromJson(json["customClaims"]),
         email: json["email"],
         displayName: json["displayName"],
         tokensValidAfterTime: json["tokensValidAfterTime"],
@@ -96,6 +101,7 @@ class User {
         "providerData": providerData == null
             ? null
             : List<dynamic>.from(providerData!.map((x) => x.toJson())),
+        "customClaims": customClaims == null ? null : customClaims?.toJson(),
         "email": email,
         "displayName": displayName,
         "tokensValidAfterTime": tokensValidAfterTime,
@@ -123,6 +129,34 @@ class Metadata {
         "lastSignInTime": lastSignInTime,
         "creationTime": creationTime,
         "lastRefreshTime": lastRefreshTime,
+      };
+}
+
+class CustomClaims {
+  CustomClaims({
+    required this.admin,
+    required this.analis,
+    required this.reviewer,
+    required this.pengutus,
+  });
+
+  bool admin;
+  bool analis;
+  bool reviewer;
+  bool pengutus;
+
+  factory CustomClaims.fromJson(Map<String, dynamic> json) => CustomClaims(
+        admin: json["admin"] == null ? null : json["admin"],
+        analis: json["analis"] == null ? null : json["analis"],
+        reviewer: json["reviewer"] == null ? null : json["reviewer"],
+        pengutus: json["pengutus"] == null ? null : json["pengutus"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "admin": admin == null ? null : admin,
+        "analis": analis == null ? null : analis,
+        "reviewer": reviewer == null ? null : reviewer,
+        "pengutus": pengutus == null ? null : pengutus,
       };
 }
 

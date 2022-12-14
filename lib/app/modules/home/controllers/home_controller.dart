@@ -23,6 +23,11 @@ class HomeController extends GetxController {
   var displayName = TextEditingController();
   var phoneNumber = TextEditingController();
 
+  // for remote form variable
+  var emailRemote = TextEditingController();
+  var passwordRemote = TextEditingController();
+  var displayNameRemote = TextEditingController();
+
   @override
   void onInit() {
     super.onInit();
@@ -174,6 +179,10 @@ class HomeController extends GetxController {
       isRemoteUsersProcessing(false);
       Get.snackbar('Error', e.toString());
     }
+  }
+
+  void refreshLocal() {
+    getUsers();
   }
 
   void clearForm() {

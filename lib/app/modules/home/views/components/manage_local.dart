@@ -21,22 +21,44 @@ class ManageLocalUsers extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       child: Column(
         children: [
-          Align(
-            alignment: Alignment.topRight,
-            child: GFButton(
-              onPressed: () {
-                // Show dialog
-                Get.dialog(
-                  AddUserForm(controller: controller),
-                );
-              },
-              text: 'Add User',
-              icon: const Icon(
-                Icons.person_add,
-                color: Colors.white,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Align(
+                alignment: Alignment.topRight,
+                child: GFButton(
+                  onPressed: () {
+                    // Show dialog
+                    Get.dialog(
+                      AddUserForm(controller: controller),
+                    );
+                  },
+                  text: 'Add User',
+                  icon: const Icon(
+                    Icons.person_add,
+                    color: Colors.white,
+                  ),
+                  color: Theme.of(context).primaryColor,
+                ),
               ),
-              color: Theme.of(context).primaryColor,
-            ),
+              const SizedBox(
+                width: 10,
+              ),
+              Align(
+                alignment: Alignment.topRight,
+                child: GFButton(
+                  onPressed: () {
+                    controller.refreshLocal();
+                  },
+                  text: 'Refresh',
+                  icon: const Icon(
+                    Icons.refresh,
+                    color: Colors.white,
+                  ),
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+            ],
           ),
           const SizedBox(
             height: 20,

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import 'package:getwidget/getwidget.dart';
 import 'package:zanpakuto_ichigo/app/modules/home/controllers/home_controller.dart';
+import 'package:zanpakuto_ichigo/app/modules/home/views/components/firebase_user_details/user_details.dart';
 
 class ManageRemoteUsers extends StatelessWidget {
   ManageRemoteUsers({
@@ -27,12 +28,12 @@ class ManageRemoteUsers extends StatelessWidget {
               child: Row(
                 children: const [
                   SizedBox(
-                    width: 15,
+                    width: 20,
                   ),
                   SizedBox(
                     width: 100,
                     child: Text(
-                      'Avatar',
+                      'UUID',
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
@@ -84,7 +85,102 @@ class ManageRemoteUsers extends StatelessWidget {
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
                       return GFListTile(
-                        title: Text(controller.listRemoteUsers[index].uid!),
+                        title: Row(
+                          children: [
+                            SizedBox(
+                              width: 50,
+                              child: Text(
+                                controller.listRemoteUsers[index].uid!,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 15,
+                            ),
+                            SizedBox(
+                              width: 180,
+                              child: Text(
+                                controller.listRemoteUsers[index].email ??
+                                    'Unregistered',
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 15,
+                            ),
+                            SizedBox(
+                              width: 100,
+                              child: Text(
+                                controller.listRemoteUsers[index].displayName ??
+                                    'Unregistered',
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 15,
+                            ),
+                            SizedBox(
+                              width: 135,
+                              child: Text(
+                                controller.listRemoteUsers[index].metadata
+                                        ?.creationTime ??
+                                    'Unregistered',
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ],
+                        ),
+                        subTitle:
+                            // This will be user roles list
+                            Row(
+                          children: [
+                            const SizedBox(
+                              width: 65,
+                            ),
+                            Text(
+                              'Roles: ',
+                              style: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                            controller.listRemoteUsers[index].customClaims
+                                        ?.admin ==
+                                    true
+                                ? const Text(
+                                    'Admin',
+                                    style: TextStyle(
+                                      color: Colors.red,
+                                    ),
+                                  )
+                                : const SizedBox.shrink(),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            controller.listRemoteUsers[index].customClaims
+                                        ?.analis ==
+                                    true
+                                ? const Text(
+                                    'Analis',
+                                    style: TextStyle(
+                                      color: Colors.red,
+                                    ),
+                                  )
+                                : const SizedBox.shrink(),
+                          ],
+                        ),
+                        icon: GFIconButton(
+                          icon: const Icon(Icons.feed_outlined),
+                          color: Theme.of(context).primaryColor,
+                          onPressed: () {
+                            Get.dialog(
+                              FirebaseDetails(
+                                controller: controller,
+                                index: index,
+                              ),
+                            );
+                          },
+                          size: GFSize.SMALL,
+                        ),
                       );
                     },
                   );
