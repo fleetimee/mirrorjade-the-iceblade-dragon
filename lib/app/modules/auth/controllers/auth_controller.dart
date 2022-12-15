@@ -63,6 +63,16 @@ class AuthController extends GetxController {
         final idTokenFinal =
             await FirebaseAuth.instance.currentUser!.getIdToken();
 
+        // Check if idToken has customClaims admin
+        final claims =
+            await FirebaseAuth.instance.currentUser!.getIdTokenResult();
+
+        if (claims.claims!['admin'] == true) {
+          debugPrint('Admin');
+        } else {
+          debugPrint('Not admin');
+        }
+
         // Verify idToken with backend
         AuthProvider().verifyIdToken(idTokenFinal).then((resp) {
           if (resp.message == 'Token is valid') {

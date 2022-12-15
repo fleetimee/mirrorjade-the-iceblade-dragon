@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:get/get.dart';
 
 class AuthForm extends StatefulWidget {
   final TextEditingController ctrl;
@@ -24,6 +25,8 @@ class AuthForm extends StatefulWidget {
 }
 
 class _AuthFormState extends State<AuthForm> {
+  bool isDarkMode = Get.isDarkMode;
+
   @override
   Widget build(BuildContext context) {
     return FormBuilderTextField(
@@ -32,7 +35,7 @@ class _AuthFormState extends State<AuthForm> {
       decoration: InputDecoration(
         prefixIcon: widget.prefixIcon,
         filled: true,
-        fillColor: Colors.grey.shade300,
+        fillColor: isDarkMode ? Colors.grey[900] : Colors.grey[200],
         hintText: widget.hint,
         border: const OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(10)),

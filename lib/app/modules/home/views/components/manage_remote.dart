@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:zanpakuto_ichigo/app/modules/home/controllers/home_controller.dart';
 import 'package:zanpakuto_ichigo/app/modules/home/views/components/firebase_user_details/user_details.dart';
+import 'package:zanpakuto_ichigo/app/modules/home/views/components/firebase_user_details/user_roles_update.dart';
+import 'package:zanpakuto_ichigo/app/modules/home/views/components/firebase_user_details/user_update.dart';
 
 class ManageRemoteUsers extends StatelessWidget {
   ManageRemoteUsers({
@@ -18,6 +20,23 @@ class ManageRemoteUsers extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       child: Column(
         children: [
+          Align(
+            alignment: Alignment.topRight,
+            child: GFButton(
+              onPressed: () {
+                // controller.refreshLocal();
+              },
+              text: 'Refresh',
+              icon: const Icon(
+                Icons.refresh,
+                color: Colors.white,
+              ),
+              color: Theme.of(context).primaryColor,
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
           GFStickyHeader(
             stickyContent: Container(
               alignment: AlignmentDirectional.center,
@@ -120,7 +139,7 @@ class ManageRemoteUsers extends StatelessWidget {
                               width: 15,
                             ),
                             SizedBox(
-                              width: 135,
+                              width: 120,
                               child: Text(
                                 controller.listRemoteUsers[index].metadata
                                         ?.creationTime ??
@@ -132,54 +151,110 @@ class ManageRemoteUsers extends StatelessWidget {
                         ),
                         subTitle:
                             // This will be user roles list
-                            Row(
-                          children: [
-                            const SizedBox(
-                              width: 65,
-                            ),
-                            Text(
-                              'Roles: ',
-                              style: TextStyle(
-                                color: Theme.of(context).primaryColor,
-                              ),
-                            ),
-                            controller.listRemoteUsers[index].customClaims
-                                        ?.admin ==
-                                    true
-                                ? const Text(
-                                    'Admin',
-                                    style: TextStyle(
-                                      color: Colors.red,
-                                    ),
-                                  )
-                                : const SizedBox.shrink(),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            controller.listRemoteUsers[index].customClaims
-                                        ?.analis ==
-                                    true
-                                ? const Text(
-                                    'Analis',
-                                    style: TextStyle(
-                                      color: Colors.red,
-                                    ),
-                                  )
-                                : const SizedBox.shrink(),
-                          ],
+                            RolesCard(
+                          controller: controller,
+                          index: index,
                         ),
-                        icon: GFIconButton(
-                          icon: const Icon(Icons.feed_outlined),
-                          color: Theme.of(context).primaryColor,
-                          onPressed: () {
-                            Get.dialog(
-                              FirebaseDetails(
-                                controller: controller,
-                                index: index,
+                        icon: PopupMenuButton(
+                          constraints: const BoxConstraints(
+                            minWidth: 100,
+                            maxWidth: 130,
+                          ),
+                          itemBuilder: (context) {
+                            return [
+                              PopupMenuItem(
+                                value: 'detail',
+                                child: GFButton(
+                                  text: 'Detail',
+                                  type: GFButtonType.outline2x,
+                                  color: GFColors.SUCCESS,
+                                  icon: const Icon(
+                                    Icons.info,
+                                    color: GFColors.SUCCESS,
+                                  ),
+                                  onPressed: () {
+                                    Get.dialog(
+                                      // barrierDismissible: false,
+                                      FirebaseDetails(
+                                        controller: controller,
+                                        index: index,
+                                      ),
+                                    );
+                                  },
+                                ),
                               ),
-                            );
+                              PopupMenuItem(
+                                value: 'edit',
+                                child: GFButton(
+                                  text: 'Update',
+                                  type: GFButtonType.outline2x,
+                                  color: Colors.orange,
+                                  icon: const Icon(
+                                    Icons.edit_outlined,
+                                    color: Colors.orange,
+                                  ),
+                                  onPressed: () {
+                                    Get.dialog(
+                                      FirebaseUpdate(
+                                        controller: controller,
+                                        index: index,
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                              PopupMenuItem(
+                                value: 'role',
+                                child: GFButton(
+                                  onPressed: () {
+                                    Get.dialog(
+                                      RoleForm(
+                                        controller: controller,
+                                        index: index,
+                                      ),
+                                    );
+                                  },
+                                  text: 'Role',
+                                  type: GFButtonType.outline2x,
+                                  color: GFColors.INFO,
+                                  icon: const Icon(
+                                    Icons.person,
+                                    color: GFColors.INFO,
+                                  ),
+                                ),
+                              ),
+                              PopupMenuItem(
+                                value: 'delete',
+                                child: GFButton(
+                                  text: 'Delete',
+                                  type: GFButtonType.outline2x,
+                                  color: GFColors.DANGER,
+                                  icon: const Icon(
+                                    Icons.delete,
+                                    color: GFColors.DANGER,
+                                  ),
+                                  onPressed: () {
+                                    Get.defaultDialog(
+                                      title: 'Delete',
+                                      middleText:
+                                          'Are you sure you want to delete this user?',
+                                      textConfirm: 'Yes',
+                                      textCancel: 'No',
+                                      confirmTextColor: Colors.white,
+                                      cancelTextColor:
+                                          Theme.of(context).primaryColor,
+                                      buttonColor:
+                                          Theme.of(context).primaryColor,
+                                      onConfirm: () {
+                                        controller.deleteRemoteUser(controller
+                                            .listRemoteUsers[index].uid!);
+                                      },
+                                    );
+                                  },
+                                ),
+                              ),
+                            ];
                           },
-                          size: GFSize.SMALL,
                         ),
                       );
                     },

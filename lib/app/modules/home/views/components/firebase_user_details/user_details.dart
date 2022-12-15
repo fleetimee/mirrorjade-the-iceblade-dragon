@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:get/get.dart';
 
 import 'package:zanpakuto_ichigo/app/modules/home/controllers/home_controller.dart';
 import 'package:zanpakuto_ichigo/app/widget/users_detail.dart';
@@ -20,39 +21,55 @@ class FirebaseDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       // show user detail
-      title: Text(
-        'Detail ${controller.listRemoteUsers[index].displayName ?? 'Unregistered'}',
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            'Detail ${controller.listRemoteUsers[index].displayName ?? 'Unregistered'}',
+          ),
+          IconButton(
+            icon: const Icon(Icons.close),
+            onPressed: () {
+              Get.back();
+            },
+          ),
+        ],
       ),
       content: FormBuilder(
         key: controller.formKey,
         child: SizedBox(
           width: 500,
-          height: 600,
+          height: 800,
           child: SingleChildScrollView(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CircleAvatar(
-                  radius: 75,
-                  child: CachedNetworkImage(
-                    imageUrl: // check if index 0 is available
-                        controller.listRemoteUsers[index].providerData!
-                                    .isEmpty || // check if photoUrl is null or not
-                                controller.listRemoteUsers[index]
-                                        .providerData![0].photoUrl ==
-                                    null
-                            ? 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
-                            : controller.listRemoteUsers[index].providerData![0]
-                                .photoUrl!,
-                    imageBuilder: (context, imageProvider) => Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                          image: imageProvider,
-                          fit: BoxFit.cover,
+                Center(
+                  child: CircleAvatar(
+                    radius: 75,
+                    child: CachedNetworkImage(
+                      imageUrl: controller.listRemoteUsers[index].photoUrl !=
+                              null
+                          ? controller.listRemoteUsers[index].photoUrl!
+                          : controller.listRemoteUsers[index].providerData!
+                                      .isEmpty ||
+                                  controller.listRemoteUsers[index]
+                                          .providerData![0].photoUrl ==
+                                      null
+                              ? 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
+                              : controller.listRemoteUsers[index]
+                                  .providerData![0].photoUrl!,
+                      imageBuilder: (context, imageProvider) => Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                            image: imageProvider,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
+                      fit: BoxFit.cover,
                     ),
-                    fit: BoxFit.cover,
                   ),
                 ),
                 const SizedBox(
@@ -72,6 +89,15 @@ class FirebaseDetails extends StatelessWidget {
                 const SizedBox(
                   height: 30,
                 ),
+                const Text(
+                  'Email',
+                  style: TextStyle(
+                    fontSize: 15,
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
                 UsersDetailForm(
                   ctrl: controller.emailRemote = TextEditingController(
                     text: controller.listRemoteUsers[index].email ?? '',
@@ -79,16 +105,18 @@ class FirebaseDetails extends StatelessWidget {
                   hint: 'Email',
                   prefixIcon: const Icon(Icons.email_outlined),
                   name: 'email_remote',
-                  suffixIcon: IconButton(
-                    icon: const Icon(Icons.copy),
-                    onPressed: () {
-                      // controller.emailRemote.text =
-                      //     controller.listRemoteUsers[index].email!;
-                    },
-                  ),
                 ),
                 const SizedBox(
                   height: 15,
+                ),
+                const Text(
+                  'Display Name',
+                  style: TextStyle(
+                    fontSize: 15,
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
                 ),
                 UsersDetailForm(
                   ctrl: controller.displayNameRemote = TextEditingController(
@@ -97,29 +125,121 @@ class FirebaseDetails extends StatelessWidget {
                   hint: 'Name',
                   prefixIcon: const Icon(Icons.alternate_email_outlined),
                   name: 'name_remote',
-                  suffixIcon: IconButton(
-                    icon: const Icon(Icons.copy),
-                    onPressed: () {
-                      // controller.nameRemote.text =
-                      //     controller.listRemoteUsers[index].displayName!;
-                    },
-                  ),
                 ),
                 const SizedBox(
                   height: 15,
                 ),
-                UsersDetailForm(
-                  ctrl: controller.passwordRemote,
-                  hint: 'Password',
-                  prefixIcon: const Icon(Icons.lock_outlined),
-                  name: 'uuid_remote',
-                  suffixIcon: IconButton(
-                    icon: const Icon(Icons.copy),
-                    onPressed: () {
-                      // controller.uidRemote.text =
-                      //     controller.listRemoteUsers[index].uid;
-                    },
+                const Text(
+                  'UUID',
+                  style: TextStyle(
+                    fontSize: 15,
                   ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                UsersDetailForm(
+                  initialValue: controller.listRemoteUsers[index].uid,
+                  hint: 'UUID',
+                  prefixIcon: const Icon(Icons.numbers_outlined),
+                  name: 'uuid_remote',
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                const Text(
+                  'Phone Number',
+                  style: TextStyle(
+                    fontSize: 15,
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                const UsersDetailForm(
+                  initialValue: 'Not Registered',
+                  hint: 'Phone Number',
+                  prefixIcon: Icon(Icons.phone_android_outlined),
+                  name: 'phone_number_remote',
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                const Text(
+                  'Last Login',
+                  style: TextStyle(
+                    fontSize: 15,
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                UsersDetailForm(
+                  initialValue: controller
+                      .listRemoteUsers[index].metadata?.lastSignInTime,
+                  hint: 'Last Login',
+                  prefixIcon: const Icon(Icons.login_outlined),
+                  name: 'last_login_remote',
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                const Text(
+                  'Created At',
+                  style: TextStyle(
+                    fontSize: 15,
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                UsersDetailForm(
+                  initialValue:
+                      controller.listRemoteUsers[index].metadata?.creationTime,
+                  hint: 'Created At',
+                  prefixIcon: const Icon(Icons.calendar_today_outlined),
+                  name: 'created_at_remote',
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                const Text(
+                  'Last Refresh',
+                  style: TextStyle(
+                    fontSize: 15,
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                UsersDetailForm(
+                  initialValue: controller
+                      .listRemoteUsers[index].metadata?.lastRefreshTime,
+                  hint: 'Last Refresh',
+                  prefixIcon: const Icon(Icons.refresh_outlined),
+                  name: 'last_refresh_remote',
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                const Text(
+                  'Token expire at',
+                  style: TextStyle(
+                    fontSize: 15,
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                UsersDetailForm(
+                  initialValue:
+                      controller.listRemoteUsers[index].tokensValidAfterTime,
+                  hint: 'Token expire at',
+                  prefixIcon: const Icon(Icons.refresh_outlined),
+                  name: 'token_expire_at_remote',
+                ),
+                const SizedBox(
+                  height: 15,
                 ),
               ],
             ),

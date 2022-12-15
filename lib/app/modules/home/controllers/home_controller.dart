@@ -181,6 +181,69 @@ class HomeController extends GetxController {
     }
   }
 
+  void applyRole(String id) {
+    final Map<String, bool> body = {
+      'admin': formKey.currentState?.fields['admin']?.value,
+      'analis': formKey.currentState?.fields['analis']?.value,
+      'reviewer': formKey.currentState?.fields['reviewer']?.value,
+      'pengutus': formKey.currentState?.fields['pengutus']?.value,
+    };
+
+    try {
+      isRemoteUsersProcessing(true);
+      UsersFirebaseProvider().addRoles(id, body).then((resp) {
+        isRemoteUsersProcessing(false);
+        clearForm();
+        getRemoteUsers();
+        Get.back();
+        Get.snackbar(
+          'Success',
+          'User updated successfully',
+          backgroundColor: GFColors.SUCCESS,
+          colorText: GFColors.WHITE,
+          icon: const Icon(
+            CupertinoIcons.checkmark_alt_circle_fill,
+            color: GFColors.WHITE,
+          ),
+        );
+      }, onError: (e) {
+        isRemoteUsersProcessing(false);
+        Get.snackbar('Error', e.toString());
+      });
+    } catch (e) {
+      isRemoteUsersProcessing(false);
+      Get.snackbar('Error', e.toString());
+    }
+  }
+
+  void deleteRemoteUser(String id) {
+    try {
+      isRemoteUsersProcessing(true);
+      UsersFirebaseProvider().deleteUser(id).then((resp) {
+        isRemoteUsersProcessing(false);
+        clearForm();
+        getRemoteUsers();
+        Get.back();
+        Get.snackbar(
+          'Success',
+          'User deleted successfully',
+          backgroundColor: GFColors.SUCCESS,
+          colorText: GFColors.WHITE,
+          icon: const Icon(
+            CupertinoIcons.checkmark_alt_circle_fill,
+            color: GFColors.WHITE,
+          ),
+        );
+      }, onError: (e) {
+        isRemoteUsersProcessing(false);
+        Get.snackbar('Error', e.toString());
+      });
+    } catch (e) {
+      isRemoteUsersProcessing(false);
+      Get.snackbar('Error', e.toString());
+    }
+  }
+
   void refreshLocal() {
     getUsers();
   }

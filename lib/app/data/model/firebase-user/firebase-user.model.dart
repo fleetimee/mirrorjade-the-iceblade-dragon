@@ -56,6 +56,10 @@ class User {
     this.uid,
     this.emailVerified,
     this.disabled,
+    this.photoUrl,
+    this.passwordHash,
+    required this.phoneNumber,
+    this.passwordSalt,
     this.metadata,
     this.providerData,
     this.email,
@@ -68,8 +72,13 @@ class User {
   bool? emailVerified;
   bool? disabled;
   Metadata? metadata;
+  String? photoUrl;
+  String phoneNumber;
+
   List<ProviderDatum>? providerData;
   CustomClaims? customClaims;
+  String? passwordHash;
+  String? passwordSalt;
   String? email;
   String? displayName;
   String? tokensValidAfterTime;
@@ -81,6 +90,12 @@ class User {
         metadata: json["metadata"] == null
             ? null
             : Metadata.fromJson(json["metadata"]),
+        phoneNumber: json["phoneNumber"] == null ? null : json["phoneNumber"],
+        photoUrl: json["photoURL"] == null ? null : json["photoURL"],
+        passwordHash:
+            json["passwordHash"] == null ? null : json["passwordHash"],
+        passwordSalt:
+            json["passwordSalt"] == null ? null : json["passwordSalt"],
         providerData: json["providerData"] == null
             ? null
             : List<ProviderDatum>.from(
@@ -98,9 +113,13 @@ class User {
         "emailVerified": emailVerified,
         "disabled": disabled,
         "metadata": metadata == null ? null : metadata?.toJson(),
+        "phoneNumber": phoneNumber == null ? null : phoneNumber,
+        "photoURL": photoUrl == null ? null : photoUrl,
         "providerData": providerData == null
             ? null
             : List<dynamic>.from(providerData!.map((x) => x.toJson())),
+        "passwordHash": passwordHash == null ? null : passwordHash,
+        "passwordSalt": passwordSalt == null ? null : passwordSalt,
         "customClaims": customClaims == null ? null : customClaims?.toJson(),
         "email": email,
         "displayName": displayName,

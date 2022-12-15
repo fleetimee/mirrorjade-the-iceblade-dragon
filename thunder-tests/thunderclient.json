@@ -1582,5 +1582,71 @@
       }
     ],
     "tests": []
+  },
+  {
+    "_id": "16f3ad21-5bb2-4274-a63a-2aa01665346f",
+    "colId": "88488ef4-ac34-4f75-a2b7-60519b187bc4",
+    "containerId": "d9a0235c-68d6-4377-97eb-8acd5f8f774d",
+    "name": "Get all users",
+    "url": "{{baseUrl}}api/v1/firebase-remote",
+    "method": "GET",
+    "sortNum": 990000,
+    "created": "2022-12-15T03:47:37.552Z",
+    "modified": "2022-12-15T04:04:43.592Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "574cd191-9793-4bcd-be51-6a8dd0b80368",
+    "colId": "88488ef4-ac34-4f75-a2b7-60519b187bc4",
+    "containerId": "d9a0235c-68d6-4377-97eb-8acd5f8f774d",
+    "name": "Delete a user",
+    "url": "{{baseUrl}}api/v1/firebase-remote/ea4d269b-f72e-464f-b93f-879b1811e165",
+    "method": "DELETE",
+    "sortNum": 1000000,
+    "created": "2022-12-15T03:50:37.210Z",
+    "modified": "2022-12-15T03:51:22.007Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "3ac66aa4-0ecf-4571-96c0-39479b53ac8a",
+    "colId": "88488ef4-ac34-4f75-a2b7-60519b187bc4",
+    "containerId": "d9a0235c-68d6-4377-97eb-8acd5f8f774d",
+    "name": "Update a user",
+    "url": "{{baseUrl}}api/v1/firebase-remote/aabdd11f-c633-4967-82eb-71debb331c73",
+    "method": "PUT",
+    "sortNum": 1010000,
+    "created": "2022-12-15T03:54:40.346Z",
+    "modified": "2022-12-15T06:53:39.017Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"email\": \"haha@gmail.com\",\n  \"displayName\": \"Zanpakuto\",\n  \"photoUrl\": \"https://aniyuki.com/wp-content/uploads/2022/03/aniyuki-anime-girl-avatar-26.jpg\",\n  \"password\": \"BUGGY227\",\n  \"phoneNumber\": \"+62823193193\",\n  \"disabled\": false,\n  \"emailVerified\": false\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "d680e931-5525-454c-9df8-a50ebd74944f",
+    "colId": "88488ef4-ac34-4f75-a2b7-60519b187bc4",
+    "containerId": "d9a0235c-68d6-4377-97eb-8acd5f8f774d",
+    "name": "Set a user claims",
+    "url": "{{baseUrl}}api/v1/firebase-remote/cd547839-c4bf-40ef-a359-9df2ee008692/set-user-claims",
+    "method": "POST",
+    "sortNum": 1020000,
+    "created": "2022-12-15T03:55:11.701Z",
+    "modified": "2022-12-15T03:56:13.252Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"admin\": false,\n  \"analis\": true,\n  \"reviewer\": true,\n  \"pengutus\": false\n}",
+      "form": []
+    },
+    "tests": []
   }
 ]

@@ -37,4 +37,53 @@ class UsersFirebaseProvider {
       return Future.error(e);
     }
   }
+
+  Future<void> addRoles(String id, Map<String, bool> body) async {
+    try {
+      final response = await httpClient.post(
+        Uri.parse('${baseUrl}firebase-remote/$id/set-user-claims'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': '*/*',
+          'Access-Control-Allow-Origin':
+              '*' // Required for CORS support to work
+        },
+        body: jsonEncode(body),
+      );
+
+      debugPrint(response.body);
+      if (response.statusCode == 201) {
+        return;
+      } else {
+        var data = jsonDecode(response.body);
+        throw Exception(data['message']);
+      }
+    } catch (e) {
+      return Future.error(e);
+    }
+  }
+
+  Future<void> deleteUser(String id) async {
+    try {
+      final response = await httpClient.delete(
+        Uri.parse('${baseUrl}firebase-remote/$id'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': '*/*',
+          'Access-Control-Allow-Origin':
+              '*' // Required for CORS support to work
+        },
+      );
+
+      debugPrint(response.body);
+      if (response.statusCode == 200) {
+        return;
+      } else {
+        var data = jsonDecode(response.body);
+        throw Exception(data['message']);
+      }
+    } catch (e) {
+      return Future.error(e);
+    }
+  }
 }

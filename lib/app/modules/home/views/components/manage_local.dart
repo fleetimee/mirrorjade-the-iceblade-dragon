@@ -186,7 +186,6 @@ class ManageLocalUsers extends StatelessWidget {
                                 minWidth: 100,
                                 maxWidth: 120,
                               ),
-                              color: Colors.grey[200],
                               elevation: 10,
                               tooltip: 'More',
                               icon: const Icon(Icons.more_vert),

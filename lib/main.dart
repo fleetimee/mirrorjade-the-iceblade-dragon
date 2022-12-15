@@ -44,12 +44,12 @@ void main() async {
         useMaterial3: true,
       ).toTheme,
       darkTheme: FlexColorScheme.dark(
-        scheme: FlexScheme.deepBlue,
+        scheme: FlexScheme.mandyRed,
         appBarStyle: FlexAppBarStyle.scaffoldBackground,
         useMaterial3: true,
         fontFamily: GoogleFonts.openSans().fontFamily,
       ).toTheme,
-      themeMode: ThemeMode.light,
+      themeMode: ThemeMode.dark,
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
