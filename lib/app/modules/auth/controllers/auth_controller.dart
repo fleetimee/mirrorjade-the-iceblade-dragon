@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -5,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:zanpakuto_ichigo/app/common/constant.dart';
 import 'package:zanpakuto_ichigo/app/data/provider/auth/auth.provider.dart';
 import 'package:zanpakuto_ichigo/app/routes/app_pages.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthController extends GetxController {
   static AuthController instance = Get.find();
@@ -93,6 +96,16 @@ class AuthController extends GetxController {
             );
           }
         });
+
+        // save resp to shared preferences
+        final prefs = await SharedPreferences.getInstance();
+
+        // convert resp to string
+        final encodedResp = jsonEncode(resp.data?.user);
+
+        // save to shared preferences
+        prefs.setString('loginResponse', encodedResp);
+
         isLoginProcessing(false);
       });
     } catch (e) {

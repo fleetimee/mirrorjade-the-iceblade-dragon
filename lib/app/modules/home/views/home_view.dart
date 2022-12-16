@@ -2,6 +2,7 @@ import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zanpakuto_ichigo/app/common/constant.dart';
 import 'package:zanpakuto_ichigo/app/modules/home/views/components/dashboard.dart';
 import 'package:zanpakuto_ichigo/app/modules/home/views/components/manage_local.dart';
@@ -95,9 +96,14 @@ class HomeView extends GetView<HomeController> {
               SideMenuItem(
                 priority: 3,
                 title: 'Exit',
-                onTap: () {
+                onTap: () async {
                   // logout firebase
                   auth.signOut();
+                  // initialize shared preferences
+                  final prefs = await SharedPreferences.getInstance();
+
+                  // remove all data from shared preferences
+                  prefs.clear();
                 },
                 icon: const Icon(Icons.exit_to_app),
               ),

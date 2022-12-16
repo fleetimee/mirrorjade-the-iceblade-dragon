@@ -1,13 +1,20 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/colors/gf_color.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zanpakuto_ichigo/app/data/model/firebase-user/firebase-user.model.dart';
 import 'package:zanpakuto_ichigo/app/data/model/user/user.model.dart';
 import 'package:zanpakuto_ichigo/app/data/provider/user-remote/user-remote.provider.dart';
 import 'package:zanpakuto_ichigo/app/data/provider/user/user.provider.dart';
 
 class HomeController extends GetxController {
+  // var for shared preferences
+  var displayNameLogged = ''.obs;
+  late var photoUrlLogged = ''.obs;
+
   // formKey
   final formKey = GlobalKey<FormBuilderState>();
 
@@ -31,8 +38,20 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    getSharedPref();
     getUsers();
     getRemoteUsers();
+  }
+
+  void getSharedPref() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    final encodedMap = prefs.getString('loginResponse');
+
+    Map<String, dynamic> decodedMap = jsonDecode(encodedMap!);
+
+    displayNameLogged.value = decodedMap['displayName'];
+    photoUrlLogged.value = decodedMap['photoURL'];
   }
 
   void getUsers() {
