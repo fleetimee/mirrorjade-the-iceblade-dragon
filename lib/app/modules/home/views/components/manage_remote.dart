@@ -24,7 +24,7 @@ class ManageRemoteUsers extends StatelessWidget {
             alignment: Alignment.topRight,
             child: GFButton(
               onPressed: () {
-                // controller.refreshLocal();
+                controller.refreshRemote();
               },
               text: 'Refresh',
               icon: const Icon(

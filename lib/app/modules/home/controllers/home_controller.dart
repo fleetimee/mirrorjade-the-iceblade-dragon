@@ -216,6 +216,46 @@ class HomeController extends GetxController {
     }
   }
 
+  void updateRemoteUser(String id) {
+    final body = {
+      'email': formKey.currentState?.fields['emailRemoteUpdate']?.value,
+      'displayName':
+          formKey.currentState?.fields['displayNameRemoteUpdate']?.value,
+      'password':
+          formKey.currentState?.fields['confirmPasswordRemoteUpdate']?.value,
+      'disabled':
+          formKey.currentState?.fields['disableUserRemoteUpdate']?.value,
+      'emailVerified':
+          formKey.currentState?.fields['verifyEmailRemoteUpdate']?.value,
+    };
+
+    try {
+      isRemoteUsersProcessing(true);
+      UsersFirebaseProvider().updateUser(id, body).then((resp) {
+        isRemoteUsersProcessing(false);
+        clearForm();
+        getRemoteUsers();
+        Get.back();
+        Get.snackbar(
+          'Success',
+          'User updated successfully',
+          backgroundColor: GFColors.SUCCESS,
+          colorText: GFColors.WHITE,
+          icon: const Icon(
+            CupertinoIcons.checkmark_alt_circle_fill,
+            color: GFColors.WHITE,
+          ),
+        );
+      }, onError: (e) {
+        isRemoteUsersProcessing(false);
+        Get.snackbar('Error', e.toString());
+      });
+    } catch (e) {
+      isRemoteUsersProcessing(false);
+      Get.snackbar('Error', e.toString());
+    }
+  }
+
   void deleteRemoteUser(String id) {
     try {
       isRemoteUsersProcessing(true);
@@ -246,6 +286,10 @@ class HomeController extends GetxController {
 
   void refreshLocal() {
     getUsers();
+  }
+
+  void refreshRemote() {
+    getRemoteUsers();
   }
 
   void clearForm() {

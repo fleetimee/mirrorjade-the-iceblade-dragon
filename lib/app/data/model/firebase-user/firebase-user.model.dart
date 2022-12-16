@@ -58,7 +58,7 @@ class User {
     this.disabled,
     this.photoUrl,
     this.passwordHash,
-    required this.phoneNumber,
+    this.phoneNumber,
     this.passwordSalt,
     this.metadata,
     this.providerData,
@@ -73,7 +73,7 @@ class User {
   bool? disabled;
   Metadata? metadata;
   String? photoUrl;
-  String phoneNumber;
+  String? phoneNumber;
 
   List<ProviderDatum>? providerData;
   CustomClaims? customClaims;

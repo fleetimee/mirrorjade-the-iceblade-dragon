@@ -20,58 +20,70 @@ class RoleForm extends StatelessWidget {
     return AlertDialog(
       title: const Text('Roles'),
       content: FormBuilder(
-        key: controller.formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              'Akun admin digunakan untuk memanage user lainnya',
-              style: Theme.of(context).textTheme.caption,
+          key: controller.formKey,
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width * 0.5,
+            child: Obx(
+              () {
+                if (controller.isRemoteUsersProcessing.value) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'Akun admin digunakan untuk memanage user lainnya',
+                        style: Theme.of(context).textTheme.caption,
+                      ),
+                      FormBuilderCheckbox(
+                        name: 'admin',
+                        title: const Text('Admin'),
+                        initialValue: controller
+                                .listRemoteUsers[index].customClaims?.admin ??
+                            false,
+                      ),
+                      Text(
+                        'Akun analis digunakan untuk melakukan input data di lapangan',
+                        style: Theme.of(context).textTheme.caption,
+                      ),
+                      FormBuilderCheckbox(
+                        name: 'analis',
+                        title: const Text('Analis'),
+                        initialValue: controller
+                                .listRemoteUsers[index].customClaims?.analis ??
+                            false,
+                      ),
+                      Text(
+                        'Akun reviewer digunakan untuk melakukan review data yang telah diinput oleh analis',
+                        style: Theme.of(context).textTheme.caption,
+                      ),
+                      FormBuilderCheckbox(
+                        name: 'reviewer',
+                        title: const Text('Reviewer'),
+                        initialValue: controller.listRemoteUsers[index]
+                                .customClaims?.reviewer ??
+                            false,
+                      ),
+                      Text(
+                        'Akun pengutus digunakan untuk mengutus data yang telah direview oleh reviewer',
+                        style: Theme.of(context).textTheme.caption,
+                      ),
+                      FormBuilderCheckbox(
+                        name: 'pengutus',
+                        title: const Text('Pemutus'),
+                        initialValue: controller.listRemoteUsers[index]
+                                .customClaims?.pengutus ??
+                            false,
+                      ),
+                    ],
+                  );
+                }
+              },
             ),
-            FormBuilderCheckbox(
-              name: 'admin',
-              title: const Text('Admin'),
-              initialValue:
-                  controller.listRemoteUsers[index].customClaims?.admin ??
-                      false,
-            ),
-            Text(
-              'Akun analis digunakan untuk melakukan input data di lapangan',
-              style: Theme.of(context).textTheme.caption,
-            ),
-            FormBuilderCheckbox(
-              name: 'analis',
-              title: const Text('Analis'),
-              initialValue:
-                  controller.listRemoteUsers[index].customClaims?.analis ??
-                      false,
-            ),
-            Text(
-              'Akun reviewer digunakan untuk melakukan review data yang telah diinput oleh analis',
-              style: Theme.of(context).textTheme.caption,
-            ),
-            FormBuilderCheckbox(
-              name: 'reviewer',
-              title: const Text('Reviewer'),
-              initialValue:
-                  controller.listRemoteUsers[index].customClaims?.reviewer ??
-                      false,
-            ),
-            Text(
-              'Akun pengutus digunakan untuk mengutus data yang telah direview oleh reviewer',
-              style: Theme.of(context).textTheme.caption,
-            ),
-            FormBuilderCheckbox(
-              name: 'pengutus',
-              title: const Text('Pemutus'),
-              initialValue:
-                  controller.listRemoteUsers[index].customClaims?.pengutus ??
-                      false,
-            ),
-          ],
-        ),
-      ),
+          )),
       actions: [
         GFButton(
           onPressed: () {

@@ -63,6 +63,31 @@ class UsersFirebaseProvider {
     }
   }
 
+  Future<void> updateUser(String id, Map<String, dynamic> body) async {
+    try {
+      final response = await httpClient.put(
+        Uri.parse('${baseUrl}firebase-remote/$id'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': '*/*',
+          'Access-Control-Allow-Origin':
+              '*' // Required for CORS support to work
+        },
+        body: jsonEncode(body),
+      );
+
+      debugPrint(response.body);
+      if (response.statusCode == 200) {
+        return;
+      } else {
+        var data = jsonDecode(response.body);
+        throw Exception(data['message']);
+      }
+    } catch (e) {
+      return Future.error(e);
+    }
+  }
+
   Future<void> deleteUser(String id) async {
     try {
       final response = await httpClient.delete(
