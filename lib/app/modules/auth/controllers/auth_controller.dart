@@ -30,13 +30,45 @@ class AuthController extends GetxController {
     ever(firebaseUser, _setInitialScreen);
   }
 
-  void _setInitialScreen(User? user) {
+  void _setInitialScreen(User? user) async {
     if (user == null) {
       debugPrint("User is currently signed out!");
       Get.offAllNamed(Routes.AUTH);
     } else {
       debugPrint("User is signed in!");
-      Get.offAllNamed(Routes.HOME);
+      // Check if idToken has customClaims admin
+      final claims =
+          await FirebaseAuth.instance.currentUser!.getIdTokenResult();
+
+      if (claims.claims!['admin'] != true) {
+        debugPrint('User is signed in, but not an admin');
+        Get.dialog(
+          AlertDialog(
+            icon: const Icon(Icons.error),
+            title: const Text('Error'),
+            content: const Text(
+                'Sorry, hanya admin yang bisa login ke aplikasi ini'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Get.back();
+                },
+                child: const Text('Ok'),
+              ),
+            ],
+          ),
+        ).then((value) async {
+          auth.signOut();
+
+          final prefs = await SharedPreferences.getInstance();
+
+          // remove all data from shared preferences
+          prefs.clear();
+        });
+      } else {
+        debugPrint('Logging in');
+        Get.offAllNamed(Routes.HOME);
+      }
     }
   }
 
@@ -54,49 +86,6 @@ class AuthController extends GetxController {
         // Get custom token from login response
         final token = resp.accessToken;
 
-        // Initialize Firebase with custom token to get idToken
-        final idToken = await FirebaseAuth.instance
-            .signInWithCustomToken(token!)
-            .then((value) => value.user!.getIdToken());
-
-        // Temporary print idToken
-        debugPrint(idToken);
-
-        // Get idToken from Firebase
-        final idTokenFinal =
-            await FirebaseAuth.instance.currentUser!.getIdToken();
-
-        // Check if idToken has customClaims admin
-        final claims =
-            await FirebaseAuth.instance.currentUser!.getIdTokenResult();
-
-        if (claims.claims!['admin'] == true) {
-          debugPrint('Admin');
-        } else {
-          debugPrint('Not admin');
-        }
-
-        // Verify idToken with backend
-        AuthProvider().verifyIdToken(idTokenFinal).then((resp) {
-          if (resp.message == 'Token is valid') {
-            // Get.offAllNamed(Routes.HOME);
-
-            Get.snackbar(
-              'Success',
-              'Login successful',
-              backgroundColor: Colors.green,
-              colorText: Colors.white,
-            );
-          } else {
-            Get.snackbar(
-              'Error',
-              'Invalid access token',
-              backgroundColor: Colors.red,
-              colorText: Colors.white,
-            );
-          }
-        });
-
         // save resp to shared preferences
         final prefs = await SharedPreferences.getInstance();
 
@@ -106,7 +95,75 @@ class AuthController extends GetxController {
         // save to shared preferences
         prefs.setString('loginResponse', encodedResp);
 
+        // Initialize Firebase with custom token to get idToken
+        final idToken = await FirebaseAuth.instance
+            .signInWithCustomToken(token!)
+            .then((value) {
+          value.user!.getIdToken();
+        }, onError: (error) {
+          isLoginProcessing(false);
+          FirebaseAuthException e = error as FirebaseAuthException;
+
+          Get.dialog(
+            AlertDialog(
+              icon: const Icon(Icons.error),
+              title: const Text('Error'),
+              content: Text(e.message!),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Get.back();
+                  },
+                  child: const Text('Ok'),
+                ),
+              ],
+            ),
+          );
+        });
+
+        // Temporary print idToken
+        debugPrint(idToken);
+
+        // Get idToken from Firebase
+        // final idTokenFinal =
+        //     await FirebaseAuth.instance.currentUser!.getIdToken();
+
+        clearFormLogin();
+
+        // Verify idToken with backend
+        // AuthProvider().verifyIdToken(idTokenFinal).then((resp) {
+        //   if (resp.message == 'Token is valid') {
+        //     // Get.offAllNamed(Routes.HOME);
+        //     debugPrint('Token is valid');
+        //   } else {
+        //     Get.snackbar(
+        //       'Error',
+        //       'Invalid access token',
+        //       backgroundColor: Colors.red,
+        //       colorText: Colors.white,
+        //     );
+        //   }
+        // }, onError: (error) {
+        //   isLoginProcessing(false);
+        //   FirebaseAuthException e = error as FirebaseAuthException;
+
+        //   Get.snackbar(
+        //     'Error',
+        //     e.message!,
+        //     backgroundColor: Colors.red,
+        //     colorText: Colors.white,
+        //   );
+        // });
+      }, onError: (error) {
         isLoginProcessing(false);
+        FirebaseAuthException e = error as FirebaseAuthException;
+
+        Get.snackbar(
+          'Error',
+          e.message!,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
       });
     } catch (e) {
       isLoginProcessing(false);
@@ -117,5 +174,12 @@ class AuthController extends GetxController {
         colorText: Colors.white,
       );
     }
+  }
+
+  void clearFormLogin() {
+    emailCtrl.clear();
+    passCtrl.clear();
+
+    formKey.currentState!.reset();
   }
 }
