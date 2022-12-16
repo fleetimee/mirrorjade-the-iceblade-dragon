@@ -84,29 +84,65 @@ class EditUsersForm extends StatelessWidget {
                   );
                 }
               }),
-              Align(
-                  alignment: Alignment.centerRight,
-                  child: Obx(() {
-                    return GFButton(
-                      onPressed: controller.isUsersProcessing.value
-                          ? null
-                          : () {
-                              if (controller.formKey.currentState!
-                                  .saveAndValidate()) {
-                                controller.modifyUser(
-                                    controller.listUsers[index].id!);
-                              }
-                              Get.back();
-                            },
-                      text: 'Update User',
-                      shape: GFButtonShape.pills,
-                      color: Theme.of(context).primaryColor,
-                    );
-                  })),
+              // Align(
+              //   alignment: Alignment.centerRight,
+              //   child: Obx(
+              //     () {
+              //       return GFButton(
+              //         onPressed: controller.isUsersProcessing.value
+              //             ? null
+              //             : () {
+              //                 if (controller.formKey.currentState!
+              //                     .saveAndValidate()) {
+              //                   controller.modifyUser(
+              //                       controller.listUsers[index].id!);
+              //                 }
+              //                 Get.back();
+              //               },
+              //         text: 'Update User',
+              //         shape: GFButtonShape.pills,
+              //         color: Theme.of(context).primaryColor,
+              //       );
+              //     },
+              //   ),
+              // ),
             ],
           ),
         ),
       ),
+      actions: [
+        GFButton(
+          onPressed: () {
+            Get.back();
+          },
+          text: 'Cancel',
+          type: GFButtonType.outline2x,
+          color: GFColors.DANGER,
+          icon: const Icon(
+            Icons.cancel,
+            color: GFColors.DANGER,
+          ),
+        ),
+        Obx(() {
+          return GFButton(
+            onPressed: controller.isUsersProcessing.value
+                ? null
+                : () {
+                    if (controller.formKey.currentState!.saveAndValidate()) {
+                      controller.modifyUser(controller.listUsers[index].id!);
+                    }
+                    Get.back();
+                  },
+            type: GFButtonType.outline2x,
+            icon: const Icon(
+              Icons.check_outlined,
+              color: GFColors.SUCCESS,
+            ),
+            text: 'Update',
+            color: GFColors.SUCCESS,
+          );
+        })
+      ],
     );
   }
 }

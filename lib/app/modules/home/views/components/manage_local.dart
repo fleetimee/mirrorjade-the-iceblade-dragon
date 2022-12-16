@@ -21,73 +21,96 @@ class ManageLocalUsers extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       child: Column(
         children: [
-          Align(
-            alignment: Alignment.topRight,
-            child: GFButton(
-              onPressed: () {
-                // Show dialog
-                Get.dialog(
-                  AddUserForm(controller: controller),
-                );
-              },
-              text: 'Add User',
-              icon: const Icon(
-                Icons.person_add,
-                color: Colors.white,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Align(
+                alignment: Alignment.topRight,
+                child: GFButton(
+                  onPressed: () {
+                    // Show dialog
+                    Get.dialog(
+                      AddUserForm(controller: controller),
+                    );
+                  },
+                  text: 'Add User',
+                  icon: const Icon(
+                    Icons.person_add,
+                    color: Colors.white,
+                  ),
+                  color: Theme.of(context).primaryColor,
+                ),
               ),
-              color: Theme.of(context).primaryColor,
-            ),
+              const SizedBox(
+                width: 10,
+              ),
+              Align(
+                alignment: Alignment.topRight,
+                child: GFButton(
+                  onPressed: () {
+                    controller.refreshLocal();
+                  },
+                  text: 'Refresh',
+                  icon: const Icon(
+                    Icons.refresh,
+                    color: Colors.white,
+                  ),
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+            ],
           ),
           const SizedBox(
             height: 20,
           ),
           GFStickyHeader(
-              stickyContent: Container(
-                alignment: AlignmentDirectional.center,
-                height: 50,
-                width: MediaQuery.of(context).size.width,
-                color: Theme.of(context).primaryColor,
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Row(
-                  children: const [
-                    SizedBox(
-                      width: 15,
-                    ),
-                    SizedBox(
-                      width: 100,
-                      child: Text(
-                        'Avatar',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    SizedBox(
-                      width: 180,
-                      child: Text(
-                        'Email',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 100,
-                      child: Text(
-                        'Name',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 30,
-                    ),
-                    Text(
-                      'Creation Date',
+            stickyContent: Container(
+              alignment: AlignmentDirectional.center,
+              height: 50,
+              width: MediaQuery.of(context).size.width,
+              color: Theme.of(context).primaryColor,
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Row(
+                children: const [
+                  SizedBox(
+                    width: 15,
+                  ),
+                  SizedBox(
+                    width: 100,
+                    child: Text(
+                      'Avatar',
                       style: TextStyle(color: Colors.white),
                     ),
-                  ],
-                ),
+                  ),
+                  SizedBox(
+                    width: 15,
+                  ),
+                  SizedBox(
+                    width: 180,
+                    child: Text(
+                      'Email',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 100,
+                    child: Text(
+                      'Name',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 30,
+                  ),
+                  Text(
+                    'Creation Date',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ],
               ),
-              content: const SizedBox.shrink()),
+            ),
+            content: const SizedBox.shrink(),
+          ),
           Expanded(
             child: Obx(
               () {
@@ -163,7 +186,6 @@ class ManageLocalUsers extends StatelessWidget {
                                 minWidth: 100,
                                 maxWidth: 120,
                               ),
-                              color: Colors.grey[200],
                               elevation: 10,
                               tooltip: 'More',
                               icon: const Icon(Icons.more_vert),

@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/colors/gf_color.dart';
+import 'package:zanpakuto_ichigo/app/data/model/firebase-user/firebase-user.model.dart';
 import 'package:zanpakuto_ichigo/app/data/model/user/user.model.dart';
+import 'package:zanpakuto_ichigo/app/data/provider/user-remote/user-remote.provider.dart';
 import 'package:zanpakuto_ichigo/app/data/provider/user/user.provider.dart';
 
 class HomeController extends GetxController {
@@ -10,8 +12,10 @@ class HomeController extends GetxController {
   final formKey = GlobalKey<FormBuilderState>();
 
   // for fetching list of users
-  var listUsers = List<Users>.empty().obs;
+  var listUsers = List<Users>.empty(growable: true).obs;
   var isUsersProcessing = false.obs;
+  var listRemoteUsers = List<User>.empty(growable: true).obs;
+  var isRemoteUsersProcessing = false.obs;
 
   // for local form variable
   var email = TextEditingController();
@@ -19,10 +23,16 @@ class HomeController extends GetxController {
   var displayName = TextEditingController();
   var phoneNumber = TextEditingController();
 
+  // for remote form variable
+  var emailRemote = TextEditingController();
+  var passwordRemote = TextEditingController();
+  var displayNameRemote = TextEditingController();
+
   @override
   void onInit() {
     super.onInit();
     getUsers();
+    getRemoteUsers();
   }
 
   void getUsers() {
@@ -137,6 +147,149 @@ class HomeController extends GetxController {
       isUsersProcessing(false);
       Get.snackbar('Error', e.toString());
     }
+  }
+
+  void getRemoteUsers() async {
+    try {
+      isRemoteUsersProcessing(true);
+      // UsersFirebaseProvider().fetchRemoteUsers().then((resp) {
+      //   isRemoteUsersProcessing(false);
+      //   listRemoteUsers.clear();
+      //   // listRemoteUsers.addAll(resp);
+      // }, onError: (e) {
+      //   isRemoteUsersProcessing(false);
+      //   Get.snackbar('Error', e.toString());
+      // });
+
+      UsersFirebaseProvider().fetchRemoteUsers().then((resp) {
+        isRemoteUsersProcessing(false);
+        final listResult = resp.data?.users;
+        listRemoteUsers.clear();
+        listRemoteUsers.addAll(listResult!);
+      }, onError: (error) {
+        isRemoteUsersProcessing(false);
+        Get.snackbar('Error', error.toString());
+      });
+
+      // final result = await UsersFirebaseProvider().fetchRemoteUsers();
+      // final listResult = result.data?.users;
+      // listRemoteUsers.clear();
+      // listRemoteUsers.addAll(listResult!);
+    } catch (e) {
+      isRemoteUsersProcessing(false);
+      Get.snackbar('Error', e.toString());
+    }
+  }
+
+  void applyRole(String id) {
+    final Map<String, bool> body = {
+      'admin': formKey.currentState?.fields['admin']?.value,
+      'analis': formKey.currentState?.fields['analis']?.value,
+      'reviewer': formKey.currentState?.fields['reviewer']?.value,
+      'pengutus': formKey.currentState?.fields['pengutus']?.value,
+    };
+
+    try {
+      isRemoteUsersProcessing(true);
+      UsersFirebaseProvider().addRoles(id, body).then((resp) {
+        isRemoteUsersProcessing(false);
+        clearForm();
+        getRemoteUsers();
+        Get.back();
+        Get.snackbar(
+          'Success',
+          'User updated successfully',
+          backgroundColor: GFColors.SUCCESS,
+          colorText: GFColors.WHITE,
+          icon: const Icon(
+            CupertinoIcons.checkmark_alt_circle_fill,
+            color: GFColors.WHITE,
+          ),
+        );
+      }, onError: (e) {
+        isRemoteUsersProcessing(false);
+        Get.snackbar('Error', e.toString());
+      });
+    } catch (e) {
+      isRemoteUsersProcessing(false);
+      Get.snackbar('Error', e.toString());
+    }
+  }
+
+  void updateRemoteUser(String id) {
+    final body = {
+      'email': formKey.currentState?.fields['emailRemoteUpdate']?.value,
+      'displayName':
+          formKey.currentState?.fields['displayNameRemoteUpdate']?.value,
+      'password':
+          formKey.currentState?.fields['confirmPasswordRemoteUpdate']?.value,
+      'disabled':
+          formKey.currentState?.fields['disableUserRemoteUpdate']?.value,
+      'emailVerified':
+          formKey.currentState?.fields['verifyEmailRemoteUpdate']?.value,
+    };
+
+    try {
+      isRemoteUsersProcessing(true);
+      UsersFirebaseProvider().updateUser(id, body).then((resp) {
+        isRemoteUsersProcessing(false);
+        clearForm();
+        getRemoteUsers();
+        Get.back();
+        Get.snackbar(
+          'Success',
+          'User updated successfully',
+          backgroundColor: GFColors.SUCCESS,
+          colorText: GFColors.WHITE,
+          icon: const Icon(
+            CupertinoIcons.checkmark_alt_circle_fill,
+            color: GFColors.WHITE,
+          ),
+        );
+      }, onError: (e) {
+        isRemoteUsersProcessing(false);
+        Get.snackbar('Error', e.toString());
+      });
+    } catch (e) {
+      isRemoteUsersProcessing(false);
+      Get.snackbar('Error', e.toString());
+    }
+  }
+
+  void deleteRemoteUser(String id) {
+    try {
+      isRemoteUsersProcessing(true);
+      UsersFirebaseProvider().deleteUser(id).then((resp) {
+        isRemoteUsersProcessing(false);
+        clearForm();
+        getRemoteUsers();
+        Get.back();
+        Get.snackbar(
+          'Success',
+          'User deleted successfully',
+          backgroundColor: GFColors.SUCCESS,
+          colorText: GFColors.WHITE,
+          icon: const Icon(
+            CupertinoIcons.checkmark_alt_circle_fill,
+            color: GFColors.WHITE,
+          ),
+        );
+      }, onError: (e) {
+        isRemoteUsersProcessing(false);
+        Get.snackbar('Error', e.toString());
+      });
+    } catch (e) {
+      isRemoteUsersProcessing(false);
+      Get.snackbar('Error', e.toString());
+    }
+  }
+
+  void refreshLocal() {
+    getUsers();
+  }
+
+  void refreshRemote() {
+    getRemoteUsers();
   }
 
   void clearForm() {
