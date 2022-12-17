@@ -1,10 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/colors/gf_color.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zanpakuto_ichigo/app/common/constant.dart';
 import 'package:zanpakuto_ichigo/app/data/model/firebase-user/firebase-user.model.dart';
 import 'package:zanpakuto_ichigo/app/data/model/user/user.model.dart';
 import 'package:zanpakuto_ichigo/app/data/provider/user-remote/user-remote.provider.dart';
@@ -309,6 +311,38 @@ class HomeController extends GetxController {
 
   void refreshRemote() {
     getRemoteUsers();
+  }
+
+  void logout() {
+    Get.dialog(
+      AlertDialog(
+        title: const Text('Logout'),
+        icon: const Icon(CupertinoIcons.question_circle_fill),
+        content: const Text('Are you sure want to logout?'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Get.back();
+            },
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () async {
+              // Get.back();
+              // Get.offAllNamed(Routes.LOGIN);
+              // logout firebase
+              auth.signOut();
+              // initialize shared preferences
+              final prefs = await SharedPreferences.getInstance();
+
+              // remove all data from shared preferences
+              prefs.clear();
+            },
+            child: const Text('Logout'),
+          ),
+        ],
+      ),
+    );
   }
 
   void clearForm() {

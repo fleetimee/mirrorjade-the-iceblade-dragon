@@ -1648,5 +1648,73 @@
       "form": []
     },
     "tests": []
+  },
+  {
+    "_id": "cbf95433-c84b-4758-9423-b8218b5ba07a",
+    "colId": "88488ef4-ac34-4f75-a2b7-60519b187bc4",
+    "containerId": "d9a0235c-68d6-4377-97eb-8acd5f8f774d",
+    "name": "Get reviewers",
+    "url": "",
+    "method": "GET",
+    "sortNum": 1030000,
+    "created": "2022-12-17T04:40:45.651Z",
+    "modified": "2022-12-17T04:40:45.651Z",
+    "headers": []
+  },
+  {
+    "_id": "fbacb63b-c841-4558-bce6-7c263ffbdc37",
+    "colId": "88488ef4-ac34-4f75-a2b7-60519b187bc4",
+    "containerId": "d9a0235c-68d6-4377-97eb-8acd5f8f774d",
+    "name": "Get reviewers",
+    "url": "{{baseUrl}}api/v1/firebase-remote/reviewers",
+    "method": "GET",
+    "sortNum": 995000,
+    "created": "2022-12-17T04:40:56.648Z",
+    "modified": "2022-12-17T04:50:44.576Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "de326a1d-aa36-4c6c-8860-6c04f0eea985",
+    "colId": "88488ef4-ac34-4f75-a2b7-60519b187bc4",
+    "containerId": "d9a0235c-68d6-4377-97eb-8acd5f8f774d",
+    "name": "Get analis",
+    "url": "{{baseUrl}}api/v1/firebase-remote/analis",
+    "method": "GET",
+    "sortNum": 992500,
+    "created": "2022-12-17T04:49:58.813Z",
+    "modified": "2022-12-17T04:50:46.366Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "13711f78-9229-4942-ac9c-ddc4bf6b034c",
+    "colId": "88488ef4-ac34-4f75-a2b7-60519b187bc4",
+    "containerId": "d9a0235c-68d6-4377-97eb-8acd5f8f774d",
+    "name": "Get admin",
+    "url": "{{baseUrl}}api/v1/firebase-remote/admin",
+    "method": "GET",
+    "sortNum": 991250,
+    "created": "2022-12-17T04:50:31.252Z",
+    "modified": "2022-12-17T04:50:50.335Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "88ea19d9-fe8e-4b35-9aa0-fed83bc2b243",
+    "colId": "88488ef4-ac34-4f75-a2b7-60519b187bc4",
+    "containerId": "d9a0235c-68d6-4377-97eb-8acd5f8f774d",
+    "name": "Get pengutus",
+    "url": "{{baseUrl}}api/v1/firebase-remote/pengutus",
+    "method": "GET",
+    "sortNum": 997500,
+    "created": "2022-12-17T04:50:56.324Z",
+    "modified": "2022-12-17T04:51:12.321Z",
+    "headers": [],
+    "params": [],
+    "tests": []
   }
 ]

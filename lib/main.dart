@@ -49,7 +49,7 @@ void main() async {
         useMaterial3: true,
         fontFamily: GoogleFonts.openSans().fontFamily,
       ).toTheme,
-      themeMode: ThemeMode.dark,
+      themeMode: ThemeMode.system,
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,

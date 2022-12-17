@@ -83,6 +83,8 @@ class AuthController extends GetxController {
     try {
       isLoginProcessing.value = true;
       AuthProvider().login(emailCtrl.text, passCtrl.text).then((resp) async {
+        isLoginProcessing(false);
+
         // Get custom token from login response
         final token = resp.accessToken;
 
