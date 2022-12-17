@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:zanpakuto_ichigo/app/common/constant.dart';
 import 'package:zanpakuto_ichigo/app/modules/home/views/components/dashboard.dart';
 import 'package:zanpakuto_ichigo/app/modules/home/views/components/manage_local.dart';
 import 'package:zanpakuto_ichigo/app/modules/home/views/components/manage_remote.dart';
@@ -94,19 +93,36 @@ class HomeView extends GetView<HomeController> {
                 icon: const Icon(Icons.cloud),
               ),
               SideMenuItem(
-                priority: 3,
-                title: 'Exit',
-                onTap: () async {
-                  // logout firebase
-                  auth.signOut();
-                  // initialize shared preferences
-                  final prefs = await SharedPreferences.getInstance();
-
-                  // remove all data from shared preferences
-                  prefs.clear();
+                priority: 4,
+                title: 'Logout',
+                onTap: () {
+                  controller.logout();
                 },
                 icon: const Icon(Icons.exit_to_app),
               ),
+              SideMenuItem(
+                priority: 3,
+                icon: const Icon(Icons.brightness_6),
+                title: 'Change Theme',
+                onTap: () async {
+                  // Change theme
+                  Get.changeThemeMode(
+                    isDarkMode ? ThemeMode.light : ThemeMode.dark,
+                  );
+                  // Change isDarkMode value
+                  isDarkMode = !isDarkMode;
+
+                  // Save theme mode to shared preferences
+                  final prefs = await SharedPreferences.getInstance();
+
+                  // Save theme mode to shared preferences
+                  prefs.setBool('isDarkMode', isDarkMode);
+
+                  // get current theme mode
+                  debugPrint(
+                      'Current theme mode: ${Get.isDarkMode ? 'Dark' : 'Light'}');
+                },
+              )
             ],
           ),
           Expanded(

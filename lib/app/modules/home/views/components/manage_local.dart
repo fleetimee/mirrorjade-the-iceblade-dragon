@@ -15,12 +15,37 @@ class ManageLocalUsers extends StatelessWidget {
 
   final controller = Get.put(HomeController());
 
+  bool isDarkMode = Get.isDarkMode;
+
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(20),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          GFTypography(
+            text: 'Manage Local Users',
+            type: GFTypographyType.typo1,
+            icon: Icon(
+              Icons.lan_outlined,
+              color: isDarkMode ? Colors.white : Colors.white,
+            ),
+            backgroundImage: const NetworkImage(
+              'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg',
+            ),
+            showDivider: true,
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Text(
+            'Akun ini digunakan untuk login ke dalam aplikasi, untuk mengatur role dan hak aksesnya silahkan ke Manage User (Remote) di menu sebelah kiri, di dalam menu ini seorang admin bisa menambahkan user, mengedit, dan menghapus user',
+            style: Theme.of(context).textTheme.bodyLarge,
+          ),
+          const SizedBox(
+            height: 20,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [

@@ -19,7 +19,41 @@ class ManageRemoteUsers extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(20),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const GFTypography(
+            text: 'Manage Remote Users',
+            type: GFTypographyType.typo1,
+            icon: Icon(
+              Icons.cloud_outlined,
+              color: Colors.white,
+            ),
+            backgroundImage: NetworkImage(
+              'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg',
+            ),
+            showDivider: true,
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Text(
+            'Akun dibawah ini terhubung langsung dengan Google (Firebase), disini admin dapat melihat detail akun secara langsung mulai dari kapan terakhir login dan sebagainya. Admin juga dapat mengubah role akun dan mendisable akun supaya tidak bisa login.',
+            style: Theme.of(context).textTheme.bodyLarge,
+          ),
+          const SizedBox(
+            height: 5,
+          ),
+          Align(
+            alignment: Alignment.topRight,
+            child: Text(
+              'Tidak melihat akunmu di bawah? Logout kemudian login menggunakan akun yang baru saja dibuat nanti akan ada notice jika akun tersebut bukan admin, kemudian login lagi dengan akun admin',
+              style: Theme.of(context).textTheme.caption,
+              textAlign: TextAlign.right,
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
           Align(
             alignment: Alignment.topRight,
             child: GFButton(
