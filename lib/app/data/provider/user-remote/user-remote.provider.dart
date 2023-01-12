@@ -18,8 +18,7 @@ class UsersFirebaseProvider {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          'Access-Control-Allow-Origin':
-              '*', // Required for CORS support to work
+          'Access-Control-Allow-Origin': '*'
         },
       );
       if (response.statusCode == 200) {
