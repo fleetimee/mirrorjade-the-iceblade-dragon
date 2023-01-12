@@ -31,6 +31,7 @@ class HomeView extends GetView<HomeController> {
         children: [
           SideMenu(
             showToggle: true,
+
             displayModeToggleDuration: const Duration(milliseconds: 500),
             // Page controller to manage a PageView
             controller: page,

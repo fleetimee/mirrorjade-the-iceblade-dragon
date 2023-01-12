@@ -173,14 +173,6 @@ class HomeController extends GetxController {
   void getRemoteUsers() async {
     try {
       isRemoteUsersProcessing(true);
-      // UsersFirebaseProvider().fetchRemoteUsers().then((resp) {
-      //   isRemoteUsersProcessing(false);
-      //   listRemoteUsers.clear();
-      //   // listRemoteUsers.addAll(resp);
-      // }, onError: (e) {
-      //   isRemoteUsersProcessing(false);
-      //   Get.snackbar('Error', e.toString());
-      // });
 
       UsersFirebaseProvider().fetchRemoteUsers().then((resp) {
         isRemoteUsersProcessing(false);
@@ -191,11 +183,6 @@ class HomeController extends GetxController {
         isRemoteUsersProcessing(false);
         Get.snackbar('Error', error.toString());
       });
-
-      // final result = await UsersFirebaseProvider().fetchRemoteUsers();
-      // final listResult = result.data?.users;
-      // listRemoteUsers.clear();
-      // listRemoteUsers.addAll(listResult!);
     } catch (e) {
       isRemoteUsersProcessing(false);
       Get.snackbar('Error', e.toString());

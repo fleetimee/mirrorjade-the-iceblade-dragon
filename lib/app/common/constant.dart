@@ -15,4 +15,6 @@ final Future<FirebaseApp> firebaseInitialization = Firebase.initializeApp(
   options: DefaultFirebaseOptions.currentPlatform,
 );
 
-const baseUrl = 'http://10.0.2.2:3000/api/v1/';
+// const baseUrl = 'http://10.0.2.2:3000/api/v1/';
+
+const baseUrl = 'https://akm-api.vviia.repl.co/api/v1/';
